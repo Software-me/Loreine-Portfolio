@@ -1,0 +1,30 @@
+window.PSST_MEDIA = {
+    "images":  [
+                   {
+                       "file":  "psst.JPG",
+                       "caption":  ""
+                   },
+                   {
+                       "file":  "psst2.JPG",
+                       "caption":  ""
+                   },
+                   {
+                       "file":  "psst3.JPG",
+                       "caption":  ""
+                   },
+                   {
+                       "file":  "psst4.JPG",
+                       "caption":  ""
+                   },
+                   {
+                       "file":  "psst5.JPG",
+                       "caption":  ""
+                   }
+               ],
+    "videos":  [
+                   {
+                       "file":  "Screen Recording 2026-04-11 042700.mp4",
+                       "caption":  ""
+                   }
+               ]
+};

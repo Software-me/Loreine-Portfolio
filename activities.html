@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Activities — music, Filipino Cultural Club PSST, and commitment beyond the school day." />
+  <title>Activities | Loreine A. Eclevia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="gradient-bg" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="index.html">Loreine</a>
+      <button type="button" class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" id="nav-toggle">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <ul class="nav__list" id="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="academic-goals.html">Academic Goals</a></li>
+        <li><a href="activities.html" aria-current="page">Activities</a></li>
+        <li><a href="reflection.html">Reflection</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="site-main site-main--page">
+    <section id="activities" class="section section--activities">
+      <div class="container">
+        <header class="section__header reveal">
+          <h2>Activities</h2>
+          <p class="section__lead">Where I invest my time and energy</p>
+        </header>
+        <div class="activity-grid">
+          <article class="flip-card reveal" data-theme="music" tabindex="0">
+            <div class="flip-card__inner">
+              <div class="flip-card__face flip-card__face--front glass">
+                <span class="activity-icon" aria-hidden="true">🎶</span>
+                <h3>Music</h3>
+                <p>School Band (Saxophone)</p>
+                <p>Jazz Band</p>
+                <div class="sound-waves" aria-hidden="true">
+                  <span></span><span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="flip-card__face flip-card__face--back glass">
+                <h3>Ensemble life</h3>
+                <p>From sectionals to performances, music has taught me listening, timing, and showing up prepared.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card reveal" data-theme="culture" tabindex="0">
+            <div class="flip-card__inner">
+              <div class="flip-card__face flip-card__face--front glass">
+                <span class="activity-icon" aria-hidden="true">🇵🇭</span>
+                <h3>Culture</h3>
+                <p>Filipino Cultural Club (PSST)</p>
+                <p class="activity-note">Pride, community, and shared stories.</p>
+                <a class="activity-front-link" href="psst-heritage.html">Open PSST gallery</a>
+              </div>
+              <div class="flip-card__face flip-card__face--back glass flip-card__face--heritage">
+                <h3 class="heritage-heading">
+                  <a class="heritage-title-link" href="psst-heritage.html">Heritage in action</a>
+                </h3>
+                <p>PSST is a space to lead, learn, and celebrate culture with peers who care deeply about representation.</p>
+                <a class="activity-gallery-cta" href="psst-heritage.html">View pictures &amp; videos</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card reveal" data-theme="commitment" tabindex="0">
+            <div class="flip-card__inner">
+              <div class="flip-card__face flip-card__face--front glass">
+                <span class="activity-icon" aria-hidden="true">⏱️</span>
+                <h3>Commitment</h3>
+                <p>Balancing multiple extracurricular activities requires dedication and time management.</p>
+              </div>
+              <div class="flip-card__face flip-card__face--back glass">
+                <h3>The honest truth</h3>
+                <p>Rehearsals for band and jazz ensemble, along with practices for PSST, often extend beyond regular school hours — and that rhythm has shaped how I plan each week.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>&copy; <span id="year"></span> Loreine A. Eclevia. Crafted with care.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

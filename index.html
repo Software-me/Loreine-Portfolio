@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Loreine A. Eclevia — portfolio: academics, music, and cultural leadership." />
+  <title>Home | Loreine A. Eclevia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="gradient-bg" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="index.html">Loreine</a>
+      <button type="button" class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" id="nav-toggle">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <ul class="nav__list" id="nav-menu">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="academic-goals.html">Academic Goals</a></li>
+        <li><a href="activities.html">Activities</a></li>
+        <li><a href="reflection.html">Reflection</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Welcome">
+      <canvas id="particles" class="hero__particles" aria-hidden="true"></canvas>
+      <div class="hero__waves" aria-hidden="true"></div>
+      <div id="hero-3d" class="hero__3d" aria-hidden="true"></div>
+      <div class="hero__bg"></div>
+      <div class="hero__overlay"></div>
+      <div class="hero__content reveal">
+        <p class="hero__eyebrow">Portfolio</p>
+        <h1 class="hero__title">Loreine A. Eclevia</h1>
+        <p class="hero__tagline">Student <span class="hero__dot">|</span> Musician <span class="hero__dot">|</span> Cultural Leader</p>
+        <p class="hero__typing" aria-live="polite">
+          <span class="hero__typing-label" id="typing-text"></span>
+          <span class="hero__cursor" aria-hidden="true"></span>
+        </p>
+        <a class="hero__cta" href="about.html">Explore my story</a>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span>Scroll</span>
+        <span class="hero__scroll-line"></span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>&copy; <span id="year"></span> Loreine A. Eclevia. Crafted with care.</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

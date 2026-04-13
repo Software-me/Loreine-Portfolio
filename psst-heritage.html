@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PSST — Filipino Cultural Club: photos and videos from heritage events." />
+  <title>PSST — Heritage in action | Loreine A. Eclevia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="gradient-bg" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="index.html">Loreine</a>
+      <button type="button" class="nav__toggle" aria-expanded="false" aria-controls="nav-menu" id="nav-toggle">
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="nav__toggle-bar"></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <ul class="nav__list" id="nav-menu">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Me</a></li>
+        <li><a href="academic-goals.html">Academic Goals</a></li>
+        <li><a href="activities.html">Activities</a></li>
+        <li><a href="reflection.html">Reflection</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="site-main site-main--page">
+    <section class="section section--gallery" aria-labelledby="gallery-title">
+      <div class="container">
+        <p class="gallery-back-wrap">
+          <a class="gallery-back" href="activities.html">← Back to Activities</a>
+        </p>
+        <header class="section__header reveal">
+          <h2 id="gallery-title">Heritage in action</h2>
+          <p class="section__lead">Filipino Cultural Club (PSST) — pictures &amp; videos</p>
+        </header>
+
+        <div id="gallery-error" class="gallery-banner glass reveal" hidden></div>
+
+        <div id="gallery-empty" class="gallery-empty glass reveal" hidden>
+          <h3 class="gallery-empty__title">Add your photos and videos</h3>
+          <ol class="gallery-empty__steps">
+            <li>Copy image files into <code>assets/psst/images/</code></li>
+            <li>Copy video files (for example <code>.mp4</code>) into <code>assets/psst/videos/</code></li>
+            <li>Run <code>scripts/generate-psst-media-json.ps1</code> to auto-generate <code>assets/psst/media.js</code> and <code>assets/psst/media.json</code> from your files.</li>
+            <li>Refresh this page (use a local server so the gallery can load the list).</li>
+          </ol>
+        </div>
+
+        <div id="gallery-photos-wrap" class="gallery-block reveal" hidden>
+          <h3 class="gallery-block__title">Photos</h3>
+          <div id="gallery-photos" class="gallery-grid"></div>
+        </div>
+
+        <div id="gallery-videos-wrap" class="gallery-block reveal" hidden>
+          <h3 class="gallery-block__title">Videos</h3>
+          <div id="gallery-videos" class="gallery-videos"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>&copy; <span id="year"></span> Loreine A. Eclevia. Crafted with care.</p>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" hidden>
+    <button type="button" class="lightbox__close" aria-label="Close">&times;</button>
+    <img class="lightbox__img" src="" alt="" />
+  </div>
+
+  <script src="assets/psst/media.js" defer></script>
+  <script src="js/main.js" defer></script>
+  <script src="js/psst-gallery.js" defer></script>
+</body>
+</html>
