@@ -466,7 +466,7 @@ body {
 
 .corner-memento--hero img {
   display: block;
-  width: min(400px, 68vw);
+  width: min(800px, 92vw);
   height: auto;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.42);
@@ -479,7 +479,7 @@ body {
 
 @media (max-width: 520px) {
   .corner-memento--hero img {
-    width: min(280px, 85vw);
+    width: min(560px, 92vw);
   }
 }
 
@@ -494,8 +494,8 @@ body {
   bottom: 0;
   left: 0;
   z-index: 0;
-  width: min(600px, 96vw);
-  max-height: min(88vh, 900px);
+  width: min(1200px, 98vw);
+  max-height: min(96vh, 1800px);
   margin: 0;
 }
 
@@ -503,7 +503,7 @@ body {
   display: block;
   width: 100%;
   height: auto;
-  max-height: min(88vh, 900px);
+  max-height: min(96vh, 1800px);
   object-fit: contain;
   object-position: left bottom;
   border-radius: 0 32px 0 0;
