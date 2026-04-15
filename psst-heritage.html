@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body class="page-psst">
   <div class="gradient-bg" aria-hidden="true"></div>
 
   <header class="site-header">
@@ -39,14 +39,14 @@
         <p class="gallery-back-wrap">
           <a class="gallery-back" href="activities.html">← Back to Activities</a>
         </p>
-        <header class="section__header reveal">
+        <header class="section__header reveal is-visible">
           <h2 id="gallery-title">Heritage in action</h2>
           <p class="section__lead">Filipino Cultural Club (PSST) — pictures &amp; videos</p>
         </header>
 
-        <div id="gallery-error" class="gallery-banner glass reveal" hidden></div>
+        <div id="gallery-error" class="gallery-banner glass reveal is-visible" hidden></div>
 
-        <div id="gallery-empty" class="gallery-empty glass reveal" hidden>
+        <div id="gallery-empty" class="gallery-empty glass reveal is-visible" hidden>
           <h3 class="gallery-empty__title">Add your photos and videos</h3>
           <ol class="gallery-empty__steps">
             <li>Copy image files into <code>assets/psst/images/</code></li>
@@ -56,12 +56,21 @@
           </ol>
         </div>
 
-        <div id="gallery-photos-wrap" class="gallery-block reveal" hidden>
-          <h3 class="gallery-block__title">Photos</h3>
-          <div id="gallery-photos" class="gallery-grid"></div>
+        <div id="gallery-carousel-wrap" class="gallery-block reveal is-visible" hidden>
+          <h3 class="gallery-block__title">Picture carousel</h3>
+          <div class="gallery-carousel glass" aria-live="polite">
+            <button type="button" class="carousel-nav carousel-nav--prev" id="carousel-prev" aria-label="Previous image">‹</button>
+            <figure class="carousel-stage">
+              <img id="carousel-image" class="carousel-stage__img" src="" alt="PSST photo" />
+              <figcaption id="carousel-caption" class="carousel-stage__caption"></figcaption>
+            </figure>
+            <button type="button" class="carousel-nav carousel-nav--next" id="carousel-next" aria-label="Next image">›</button>
+          </div>
+          <p id="carousel-count" class="carousel-count"></p>
+          <div id="carousel-thumbs" class="carousel-thumbs" role="tablist" aria-label="Select picture"></div>
         </div>
 
-        <div id="gallery-videos-wrap" class="gallery-block reveal" hidden>
+        <div id="gallery-videos-wrap" class="gallery-block reveal is-visible" hidden>
           <h3 class="gallery-block__title">Videos</h3>
           <div id="gallery-videos" class="gallery-videos"></div>
         </div>
@@ -76,8 +85,8 @@
   </footer>
 
   <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image" hidden>
-    <button type="button" class="lightbox__close" aria-label="Close">&times;</button>
-    <img class="lightbox__img" src="" alt="" />
+    <button type="button" id="lightbox-close" class="lightbox__close" aria-label="Close">&times;</button>
+    <img id="lightbox-image" class="lightbox__img" src="" alt="" />
   </div>
 
   <script src="assets/psst/media.js" defer></script>
