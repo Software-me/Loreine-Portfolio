@@ -450,39 +450,76 @@ body {
   }
 }
 
-/* Personal snapshot — bottom corner (home hero + about page) */
+/* Personal snapshot — home: blended into hero; About: large layer behind content */
 .corner-memento {
   margin: 0;
   pointer-events: none;
 }
 
-.corner-memento img {
-  display: block;
-  width: min(200px, 34vw);
-  height: auto;
-  border-radius: 14px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
+/* Home: 2× previous size; blends with hero photo without heavy darkening */
 .corner-memento--hero {
   position: absolute;
-  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
-  left: max(1.25rem, env(safe-area-inset-left, 0px));
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  left: max(1rem, env(safe-area-inset-left, 0px));
   z-index: 5;
 }
 
-.corner-memento--fixed {
-  position: fixed;
-  bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
-  left: max(1.25rem, env(safe-area-inset-left, 0px));
-  z-index: 50;
+.corner-memento--hero img {
+  display: block;
+  width: min(400px, 68vw);
+  height: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow:
+    0 10px 36px rgba(0, 0, 0, 0.28),
+    0 0 50px rgba(255, 200, 170, 0.22);
+  mix-blend-mode: soft-light;
+  filter: brightness(1.14) contrast(1.04) saturate(1.08);
 }
 
 @media (max-width: 520px) {
-  .corner-memento img {
-    width: min(140px, 42vw);
+  .corner-memento--hero img {
+    width: min(280px, 85vw);
   }
+}
+
+/* About: 3× original corner width (200px → 600px), fixed behind sections */
+.site-main--about {
+  position: relative;
+  z-index: 1;
+}
+
+.corner-memento--about-bg {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  width: min(600px, 96vw);
+  max-height: min(88vh, 900px);
+  margin: 0;
+}
+
+.corner-memento--about-bg img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(88vh, 900px);
+  object-fit: contain;
+  object-position: left bottom;
+  border-radius: 0 32px 0 0;
+  border: none;
+  opacity: 0.5;
+  filter: brightness(1.12) saturate(1.08);
+}
+
+.site-main--about > section {
+  position: relative;
+  z-index: 1;
+}
+
+.site-main--about ~ .site-footer {
+  position: relative;
+  z-index: 2;
 }
 
 /* ----- Sections ----- */
