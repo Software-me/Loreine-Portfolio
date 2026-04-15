@@ -466,7 +466,7 @@ body {
 
 .corner-memento--hero img {
   display: block;
-  width: min(800px, 92vw);
+  width: min(400px, 46vw);
   height: auto;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.42);
@@ -479,7 +479,7 @@ body {
 
 @media (max-width: 520px) {
   .corner-memento--hero img {
-    width: min(560px, 92vw);
+    width: min(280px, 46vw);
   }
 }
 
@@ -829,13 +829,13 @@ section[id] {
 }
 
 .activity-gallery-cta {
-  margin-top: 0.85rem;
+  margin-top: 0.425rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.55rem 1.2rem;
+  padding: 0.275rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.88rem;
+  font-size: max(0.6875rem, calc(0.88rem * 0.5));
   font-weight: 600;
   color: var(--text);
   text-decoration: none;
@@ -846,12 +846,12 @@ section[id] {
 }
 
 .activity-gallery-cta:hover {
-  transform: translateY(-1px);
+  transform: translateY(-0.5px);
   color: var(--glow-orange);
   border-color: rgba(255, 159, 67, 0.85);
   background: rgba(255, 120, 50, 0.14);
   text-shadow: var(--glow-orange-shadow);
-  box-shadow: 0 0 22px rgba(255, 130, 50, 0.5), 0 8px 28px rgba(80, 40, 20, 0.35);
+  box-shadow: 0 0 11px rgba(255, 130, 50, 0.45), 0 4px 14px rgba(80, 40, 20, 0.3);
 }
 
 .activity-gallery-cta:focus-visible {
@@ -860,10 +860,10 @@ section[id] {
 }
 
 .activity-gallery-actions {
-  margin-top: 0.85rem;
+  margin-top: 0.425rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.275rem;
   justify-content: center;
 }
 
