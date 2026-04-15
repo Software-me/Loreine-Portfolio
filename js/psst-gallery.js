@@ -11,9 +11,6 @@
   var carouselThumbs = document.getElementById("carousel-thumbs");
   var prevBtn = document.getElementById("carousel-prev");
   var nextBtn = document.getElementById("carousel-next");
-  var lightbox = document.getElementById("lightbox");
-  var lightboxImage = document.getElementById("lightbox-image");
-  var lightboxClose = document.getElementById("lightbox-close");
   var videosEl = document.getElementById("gallery-videos");
   var videosWrap = document.getElementById("gallery-videos-wrap");
   var emptyEl = document.getElementById("gallery-empty");
@@ -84,23 +81,6 @@
     if (next >= imageItems.length) next = 0;
     currentIndex = next;
     renderCurrentImage();
-  }
-
-  function openLightbox() {
-    if (!lightbox || !lightboxImage || imageItems.length === 0) return;
-    var current = imageItems[currentIndex];
-    lightboxImage.src = current.src;
-    lightboxImage.alt = buildAlt(current);
-    lightbox.hidden = false;
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeLightbox() {
-    if (!lightbox || !lightboxImage) return;
-    lightbox.hidden = true;
-    lightboxImage.src = "";
-    lightboxImage.alt = "";
-    document.body.style.overflow = "";
   }
 
   function renderMedia(data) {
@@ -186,31 +166,7 @@
       setCurrentImage(currentIndex + 1);
     });
   }
-  if (carouselImage) {
-    carouselImage.addEventListener("click", openLightbox);
-    carouselImage.tabIndex = 0;
-    carouselImage.setAttribute("role", "button");
-    carouselImage.setAttribute("aria-label", "Enlarge image");
-    carouselImage.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openLightbox();
-      }
-    });
-  }
-  if (lightboxClose) {
-    lightboxClose.addEventListener("click", closeLightbox);
-  }
-  if (lightbox) {
-    lightbox.addEventListener("click", function (e) {
-      if (e.target === lightbox) closeLightbox();
-    });
-  }
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && lightbox && !lightbox.hidden) {
-      closeLightbox();
-      return;
-    }
     if (imageItems.length === 0) return;
     if (e.key === "ArrowLeft") {
       setCurrentImage(currentIndex - 1);
