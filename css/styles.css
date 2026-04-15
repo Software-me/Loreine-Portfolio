@@ -202,6 +202,7 @@ body {
   background-size: cover;
   background-position: center 35%;
   z-index: 0;
+  filter: brightness(1.12) contrast(1.04) saturate(1.05);
 }
 
 .hero__overlay {
@@ -209,8 +210,8 @@ body {
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(180deg, rgba(8, 6, 16, 0.55) 0%, rgba(12, 10, 24, 0.75) 45%, rgba(10, 8, 22, 0.92) 100%),
-    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(100, 80, 200, 0.25), transparent 55%);
+    linear-gradient(180deg, rgba(8, 6, 16, 0.38) 0%, rgba(12, 10, 24, 0.52) 45%, rgba(10, 8, 22, 0.72) 100%),
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(100, 80, 200, 0.18), transparent 55%);
 }
 
 .hero__particles {
