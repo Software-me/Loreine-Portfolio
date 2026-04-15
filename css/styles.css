@@ -728,6 +728,14 @@ section[id] {
   box-shadow: 0 8px 24px rgba(80, 60, 160, 0.35);
 }
 
+.activity-gallery-actions {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: center;
+}
+
 /* PSST gallery page */
 .gallery-back-wrap {
   margin: 0 0 1.5rem;
