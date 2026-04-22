@@ -8,7 +8,6 @@
   var carouselImage = document.getElementById("carousel-image");
   var carouselCaption = document.getElementById("carousel-caption");
   var carouselCount = document.getElementById("carousel-count");
-  var carouselThumbs = document.getElementById("carousel-thumbs");
   var prevBtn = document.getElementById("carousel-prev");
   var nextBtn = document.getElementById("carousel-next");
   var emptyEl = document.getElementById("gallery-empty");
@@ -16,7 +15,7 @@
   var imageItems = [];
   var currentIndex = 0;
 
-  if (!carouselWrap || !carouselImage || !carouselThumbs) return;
+  if (!carouselWrap || !carouselImage) return;
 
   function showError(msg) {
     if (!errorEl) return;
@@ -58,13 +57,6 @@
     carouselCaption.textContent = item.caption || "";
     carouselCaption.hidden = item.caption === "";
     carouselCount.textContent = "Image " + String(currentIndex + 1) + " of " + String(imageItems.length);
-
-    Array.prototype.forEach.call(carouselThumbs.querySelectorAll(".carousel-thumb"), function (btn, idx) {
-      var isActive = idx === currentIndex;
-      btn.classList.toggle("is-active", isActive);
-      btn.setAttribute("aria-selected", isActive ? "true" : "false");
-      btn.tabIndex = isActive ? 0 : -1;
-    });
   }
 
   function setCurrentImage(index) {
@@ -85,6 +77,8 @@
 
     if (emptyEl) emptyEl.hidden = true;
     carouselWrap.hidden = false;
+    carouselImage.loading = "lazy";
+    carouselImage.decoding = "async";
 
     images.forEach(function (item, index) {
       var file = typeof item === "string" ? item : item.file;
@@ -93,29 +87,27 @@
       var src = BASE + "images/" + file;
       var imageItem = { src: src, caption: caption, index: index };
       imageItems.push(imageItem);
-
-      var thumbBtn = document.createElement("button");
-      thumbBtn.type = "button";
-      thumbBtn.className = "carousel-thumb";
-      thumbBtn.setAttribute("role", "tab");
-      thumbBtn.setAttribute("aria-label", "Show image " + String(index + 1));
-      thumbBtn.setAttribute("aria-selected", "false");
-      thumbBtn.tabIndex = -1;
-      thumbBtn.addEventListener("click", function () {
-        setCurrentImage(index);
-      });
-
-      var thumbImg = document.createElement("img");
-      thumbImg.className = "carousel-thumb__img";
-      thumbImg.src = src;
-      thumbImg.alt = buildAlt(imageItem);
-      thumbImg.loading = "lazy";
-
-      thumbBtn.appendChild(thumbImg);
-      carouselThumbs.appendChild(thumbBtn);
     });
+    if (imageItems.length === 0) {
+      showEmptyInstructions();
+      return;
+    }
 
-    renderCurrentImage();
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            renderCurrentImage();
+            io.disconnect();
+          });
+        },
+        { root: null, rootMargin: "200px 0px", threshold: 0.01 }
+      );
+      io.observe(carouselWrap);
+    } else {
+      renderCurrentImage();
+    }
   }
 
   if (prevBtn) {
@@ -132,8 +124,10 @@
   document.addEventListener("keydown", function (e) {
     if (imageItems.length === 0) return;
     if (e.key === "ArrowLeft") {
+      e.preventDefault();
       setCurrentImage(currentIndex - 1);
     } else if (e.key === "ArrowRight") {
+      e.preventDefault();
       setCurrentImage(currentIndex + 1);
     }
   });
