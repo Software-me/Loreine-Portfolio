@@ -37,6 +37,32 @@
     };
   }
 
+  function getVideoDetails(file) {
+    var details = window.PSST_VIDEO_DETAILS;
+    if (!details || typeof details !== "object") return {};
+    var match = details[file];
+    if (!match || typeof match !== "object") return {};
+    return match;
+  }
+
+  function getVideoTitle(item, file) {
+    if (item && typeof item === "object" && typeof item.title === "string") {
+      return item.title.trim();
+    }
+    var details = getVideoDetails(file);
+    if (typeof details.title === "string") return details.title.trim();
+    return "";
+  }
+
+  function getVideoDescription(item, file) {
+    if (item && typeof item === "object" && typeof item.description === "string") {
+      return item.description.trim();
+    }
+    var details = getVideoDetails(file);
+    if (typeof details.description === "string") return details.description.trim();
+    return "";
+  }
+
   function renderMedia(data) {
     var videos = Array.isArray(data.videos) ? data.videos : [];
     if (videos.length === 0) {
@@ -51,10 +77,18 @@
     videos.forEach(function (item) {
       var file = typeof item === "string" ? item : item.file;
       if (!file) return;
+      var title = getVideoTitle(item, file);
       var caption = typeof item === "object" && item.caption ? item.caption : "";
+      var description = getVideoDescription(item, file);
 
       var wrap = document.createElement("div");
       wrap.className = "gallery-video glass";
+
+      var titleEl = document.createElement("h4");
+      titleEl.className = "gallery-video__title";
+      titleEl.textContent = title;
+      titleEl.hidden = title === "";
+      wrap.appendChild(titleEl);
 
       var video = document.createElement("video");
       video.className = "gallery-video__el";
@@ -69,6 +103,17 @@
         cap.className = "gallery-video__caption";
         cap.textContent = caption;
         wrap.appendChild(cap);
+      }
+      if (description) {
+        var blocks = description.split(/\n\s*\n/);
+        blocks.forEach(function (block) {
+          var text = block.trim();
+          if (!text) return;
+          var desc = document.createElement("p");
+          desc.className = "gallery-video__description";
+          desc.textContent = text;
+          wrap.appendChild(desc);
+        });
       }
       videosEl.appendChild(wrap);
       deferredVideos.push(video);
