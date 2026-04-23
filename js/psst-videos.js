@@ -46,6 +46,7 @@
 
     if (emptyEl) emptyEl.hidden = true;
     videosWrap.hidden = false;
+    var deferredVideos = [];
 
     videos.forEach(function (item) {
       var file = typeof item === "string" ? item : item.file;
@@ -59,8 +60,8 @@
       video.className = "gallery-video__el";
       video.controls = true;
       video.playsInline = true;
-      video.preload = "metadata";
-      video.src = BASE + "videos/" + file;
+      video.preload = "none";
+      video.dataset.src = BASE + "videos/" + file;
 
       wrap.appendChild(video);
       if (caption) {
@@ -70,7 +71,35 @@
         wrap.appendChild(cap);
       }
       videosEl.appendChild(wrap);
+      deferredVideos.push(video);
     });
+
+    function activateVideo(videoEl) {
+      if (!videoEl || !videoEl.dataset || !videoEl.dataset.src) return;
+      if (videoEl.getAttribute("src")) return;
+      videoEl.src = videoEl.dataset.src;
+      videoEl.load();
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            activateVideo(entry.target);
+            io.unobserve(entry.target);
+          });
+        },
+        { root: null, rootMargin: "250px 0px", threshold: 0.01 }
+      );
+      deferredVideos.forEach(function (videoEl) {
+        io.observe(videoEl);
+      });
+    } else {
+      deferredVideos.forEach(function (videoEl) {
+        activateVideo(videoEl);
+      });
+    }
   }
 
   var globalMedia = getMediaFromGlobal();
