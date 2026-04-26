@@ -3,7 +3,7 @@ This project is a custom-built portfolio website created to document my daughter
 Unlike a classroom demo, this was developed as a **real-world production project**, with continuous improvements focused on performance, usability, and long-term maintainability.
 ---
 ##  Live Site  
- https://software-me.github.io/loreine-portfolio/  
+ https://software-me.github.io/Loreine-Portfolio/  
 ---
 ##  Project Purpose  
 - Provide a polished, accessible online portfolio for academic achievements and activities  
@@ -78,3 +78,4 @@ It highlights my ability to:
 **Loreto E. Eclevia**  
  leclevia@my365.bellevue.edu  
  LinkedIn: https://www.linkedin.com/in/loreto-eclevia-3422872b
+
