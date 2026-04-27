@@ -19,7 +19,8 @@ window.SENIOR_SHOWCASE_MEDIA = {
     // Videos coming up soon!
     // Example (title and description optional; use \n\n in description for a second paragraph):
     // { file: "highlights.mp4", title: "", description: "" }
-    { file: "OPPZ6294.MOV", title: "Showcase Internship video under construction", description: "Videos coming soon." }
+    { file: "OPPZ6294.MOV", title: "Showcase Internship video under construction", description: "Videos coming soon." },
+    { file: "Screen Recording 2026-04-26 065155.mp4", title: "Showcase Internship video", description: "" }
   ],
   youtube: [
     // Use the embed URL from YouTube (Share → Embed → copy src URL).
