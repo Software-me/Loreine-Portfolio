@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Chat with Loreine A. Eclevia — Troy High School." />
+  <meta name="description" content="Chat with Loreine A. Eclevia — send messages and attach images or videos." />
   <title>Chat | Loreine A. Eclevia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,8 +43,53 @@
         <div class="contact-card glass reveal">
           <p class="contact-card__name">Loreine A. Eclevia</p>
           <p class="contact-card__meta">Troy High School · Senior</p>
-          <p class="contact-card__hint">Reach out through your preferred school or community channel — I am happy to continue the conversation.</p>
+          <p class="contact-card__hint">Send a message below and Loreine can reply to your email directly.</p>
         </div>
+
+        <section class="chat-panel glass reveal" aria-label="Chat message form">
+          <h3 class="chat-panel__title">Send a Chat Message</h3>
+          <p class="chat-panel__lead">You can attach images or videos with your message.</p>
+          <form
+            id="chat-form"
+            class="chat-form"
+            action="https://formspree.io/f/yourFormId"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <label class="chat-form__field">
+              <span>Your Name</span>
+              <input type="text" name="name" required />
+            </label>
+
+            <label class="chat-form__field">
+              <span>Your Email (for Loreine to reply)</span>
+              <input type="email" name="email" required />
+            </label>
+
+            <label class="chat-form__field">
+              <span>Phone Number (optional)</span>
+              <input type="tel" name="phone" />
+            </label>
+
+            <label class="chat-form__field">
+              <span>Social Media Profile Name (optional)</span>
+              <input type="text" name="socialProfile" />
+            </label>
+
+            <label class="chat-form__field">
+              <span>Message</span>
+              <textarea name="message" rows="5" required></textarea>
+            </label>
+
+            <label class="chat-form__field">
+              <span>Attach Images or Videos (optional)</span>
+              <input type="file" name="attachments" accept="image/*,video/*" multiple />
+            </label>
+
+            <button type="submit" class="chat-form__button">Send Message</button>
+            <p id="chat-form-status" class="chat-form__status" aria-live="polite"></p>
+          </form>
+        </section>
       </div>
     </section>
   </main>
@@ -56,6 +101,7 @@
   </footer>
 
   <script src="js/main.js" defer></script>
+  <script src="js/chat.js" defer></script>
 </body>
 </html>
 
