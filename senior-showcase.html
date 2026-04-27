@@ -55,20 +55,28 @@
           <article id="showcase-photos" class="journey-card glass reveal">
             <h3>Showcase Photos</h3>
             <p>Add your event pictures here when ready. This section is prepared as a dedicated home for visual highlights from the ceremony.</p>
+            <p class="showcase-media__hint">Add image files to <code>assets/senior-showcase/images/</code> and list them in <code>assets/senior-showcase/media.js</code>.</p>
             <p>
               <a class="gallery-back" href="#showcase-photos">Open Photos Gallery</a>
             </p>
-            <div class="gallery-grid"></div>
+            <div id="showcase-photos-grid" class="gallery-grid"></div>
           </article>
           <article id="showcase-videos" class="journey-card glass reveal">
             <h3>Showcase Videos</h3>
             <p>Add your event videos and a short description for each clip to capture the context of each recognition moment.</p>
+            <p class="showcase-media__hint">Add video files to <code>assets/senior-showcase/videos/</code> and list them in <code>assets/senior-showcase/media.js</code>.</p>
             <p>
               <a class="gallery-back" href="#showcase-videos">Open Videos Gallery</a>
             </p>
-            <div class="gallery-videos"></div>
+            <div id="showcase-videos-grid" class="gallery-videos"></div>
           </article>
         </div>
+
+        <section id="showcase-youtube" class="journey-card glass reveal" style="margin-top:1.25rem;">
+          <h3>YouTube Highlights</h3>
+          <p class="showcase-media__hint">Add YouTube embed links in <code>assets/senior-showcase/media.js</code> under <code>youtube</code>.</p>
+          <div id="showcase-youtube-grid" class="gallery-videos"></div>
+        </section>
       </div>
     </section>
   </main>
@@ -79,7 +87,9 @@
     </div>
   </footer>
 
+  <script src="assets/senior-showcase/media.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/senior-showcase.js" defer></script>
 </body>
 </html>
 

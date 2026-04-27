@@ -601,6 +601,18 @@ section[id] {
   color: var(--text-muted);
 }
 
+.showcase-media__hint {
+  margin: 0 0 0.85rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.showcase-media__hint code {
+  font-size: 0.84em;
+  color: var(--accent-2);
+}
+
 /* Timeline */
 .section--timeline {
   padding-top: 2rem;
