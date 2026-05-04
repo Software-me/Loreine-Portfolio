@@ -487,15 +487,17 @@ body {
 /* Personal snapshot — home: blended into hero; About: large layer behind content */
 .corner-memento {
   margin: 0;
-  pointer-events: none;
 }
 
-/* Home: 2× previous size; blends with hero photo without heavy darkening */
+/* Home: 2× previous size; draggable + interactive */
 .corner-memento--hero {
   position: absolute;
   bottom: max(1rem, env(safe-area-inset-bottom, 0px));
   left: max(1rem, env(safe-area-inset-left, 0px));
-  z-index: 5;
+  z-index: 8;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .corner-memento--hero img {
@@ -509,11 +511,44 @@ body {
     0 0 50px rgba(255, 200, 170, 0.22);
   mix-blend-mode: soft-light;
   filter: brightness(1.14) contrast(1.04) saturate(1.08);
+  cursor: grab;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+}
+
+.corner-memento--hero:hover img {
+  transform: scale(1.06);
+  box-shadow:
+    0 14px 44px rgba(0, 0, 0, 0.36),
+    0 0 62px rgba(255, 180, 140, 0.38);
+}
+
+.corner-memento--hero.is-dragging img {
+  cursor: grabbing;
+  transform: scale(1.04);
+}
+
+.corner-memento--hero.is-zoomed img {
+  transform: scale(1.55);
+  mix-blend-mode: normal;
+  filter: brightness(1.1) contrast(1.08) saturate(1.1);
 }
 
 @media (max-width: 520px) {
   .corner-memento--hero img {
-    width: min(140px, 23vw);
+    width: min(140px, 30vw);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__bg {
+    background-size: cover;
+    background-position: center 25%;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero__bg {
+    background-position: center 20%;
   }
 }
 
