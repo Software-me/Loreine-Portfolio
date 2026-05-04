@@ -414,6 +414,40 @@ body {
   background: linear-gradient(135deg, rgba(196, 165, 255, 0.45), rgba(126, 200, 227, 0.35));
 }
 
+.hero__cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.hero__cta--warm {
+  background: linear-gradient(135deg, rgba(255, 159, 67, 0.35), rgba(255, 120, 64, 0.28));
+  border-color: rgba(255, 190, 145, 0.55);
+}
+
+.hero__cta--warm:hover {
+  background: linear-gradient(135deg, rgba(255, 159, 67, 0.5), rgba(255, 120, 64, 0.38));
+  box-shadow: 0 16px 48px rgba(220, 110, 45, 0.4);
+}
+
+.hero__activities-note {
+  margin: 1.15rem auto 0;
+  max-width: 700px;
+  padding: 0.95rem 1.05rem;
+  border-radius: 14px;
+  font-size: 0.97rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.55;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 150, 80, 0.08));
+}
+
+.hero__activities-note strong {
+  color: var(--glow-orange);
+  text-shadow: 0 0 14px rgba(255, 160, 80, 0.5);
+}
+
 .hero__scroll {
   position: absolute;
   bottom: 2rem;
@@ -1181,6 +1215,298 @@ body.page-psst .gallery-banner {
 
 body.page-psst .gallery-card__img {
   filter: brightness(1.08) contrast(1.08) saturate(1.03);
+}
+
+/* ----- PSST Videos — LitoMovies-style banner + carousel ----- */
+body.page-psst .psst-movie-root {
+  font-family: "Poppins", var(--font-sans), system-ui, sans-serif;
+}
+
+body.page-psst .psst-movie-column {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 320px;
+  min-width: 0;
+  max-width: min(520px, 100%);
+}
+
+body.page-psst .psst-movie-banner {
+  position: relative;
+  width: 100%;
+  min-height: min(720px, calc(100vh - var(--nav-h) - 4rem));
+  padding: 2rem min(100px, 6vw);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  overflow: hidden;
+  border-radius: var(--radius);
+  transition: background 0.45s ease;
+}
+
+body.page-psst .psst-movie-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+body.page-psst .psst-movie-content {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 320px;
+  max-width: min(520px, 100%);
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.98);
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+}
+
+body.page-psst .psst-movie-content.active {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+body.page-psst .psst-movie-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+body.page-psst .psst-movie-meta {
+  color: rgba(244, 240, 255, 0.55);
+  font-weight: 400;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  margin: 0 0 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0;
+}
+
+body.page-psst .psst-movie-meta span {
+  padding: 0 10px;
+  border-right: 1px solid rgba(244, 240, 255, 0.28);
+}
+
+body.page-psst .psst-movie-meta span:first-child {
+  padding-left: 0;
+}
+
+body.page-psst .psst-movie-meta span:last-child {
+  border-right: 0;
+}
+
+body.page-psst .psst-movie-desc {
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 1rem;
+}
+
+body.page-psst .psst-movie-desc p {
+  margin: 0 0 0.65rem;
+}
+
+body.page-psst .psst-movie-desc p:last-child {
+  margin-bottom: 0;
+}
+
+body.page-psst .psst-movie-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+body.page-psst .psst-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.15rem;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  border-radius: 4px;
+  transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+body.page-psst .psst-btn--primary {
+  background: var(--glow-orange-hot);
+  color: #1a0f08;
+  border: 1px solid rgba(255, 180, 120, 0.65);
+}
+
+body.page-psst .psst-btn--primary:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+body.page-psst .psst-carousel-box {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 420px;
+  min-width: 0;
+  max-width: min(950px, 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.22);
+  box-shadow: 16px 16px 40px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 12px;
+  padding: 0.75rem 0;
+}
+
+body.page-psst .psst-carousel {
+  position: relative;
+  height: 420px;
+  perspective: 1500px;
+  margin: 0;
+}
+
+body.page-psst .psst-carousel .carousel-item {
+  width: 220px;
+  cursor: pointer;
+}
+
+body.page-psst .psst-carousel .carousel-item img {
+  max-width: 210px;
+  border-radius: 10px;
+  transform: translateX(6px) translateY(-72px);
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 2 / 3;
+}
+
+body.page-psst .psst-carousel-fallback {
+  width: 210px;
+  min-height: 280px;
+  margin-left: 6px;
+  transform: translateY(-72px);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(196, 165, 255, 0.22), rgba(126, 200, 227, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0.65rem;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+body.page-psst .psst-trailer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(6, 4, 12, 0.72);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+body.page-psst .psst-trailer.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+body.page-psst .psst-trailer__video {
+  width: min(900px, 100%);
+  max-height: min(80vh, 100%);
+  outline: none;
+  background: #000;
+  border-radius: 10px;
+}
+
+body.page-psst .psst-trailer__close {
+  position: absolute;
+  top: calc(var(--nav-h) + 12px);
+  right: min(32px, 5vw);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(12, 10, 18, 0.65);
+  color: var(--text);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.page-psst .psst-trailer__close:hover {
+  border-color: rgba(255, 159, 67, 0.85);
+  color: var(--glow-orange);
+}
+
+@media (max-width: 991px) {
+  body.page-psst .psst-movie-banner {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.5rem min(50px, 5vw);
+    min-height: auto;
+  }
+
+  body.page-psst .psst-carousel {
+    height: 300px;
+  }
+
+  body.page-psst .psst-carousel .carousel-item {
+    width: 150px;
+  }
+
+  body.page-psst .psst-carousel .carousel-item img,
+  body.page-psst .psst-carousel-fallback {
+    max-width: 140px;
+    width: 140px;
+    min-height: 200px;
+    transform: translateX(6px) translateY(-48px);
+  }
+}
+
+@media (max-width: 600px) {
+  body.page-psst .psst-movie-banner {
+    padding: 1.25rem 1rem;
+  }
+
+  body.page-psst .psst-carousel-box {
+    max-width: 100%;
+  }
+
+  body.page-psst .psst-carousel {
+    height: 260px;
+  }
+
+  body.page-psst .psst-movie-meta {
+    font-size: 0.88rem;
+  }
 }
 
 /* Reflection layout */
