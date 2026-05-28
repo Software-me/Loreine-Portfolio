@@ -49,6 +49,36 @@
     };
   }
 
+  function getYoutubeEntries() {
+    var list = window.PSST_YOUTUBE_ENTRIES;
+    if (!Array.isArray(list)) return [];
+    return list.filter(function (entry) {
+      return entry && typeof entry === "object" && typeof entry.youtubeUrl === "string" && entry.youtubeUrl.trim();
+    });
+  }
+
+  function isYoutubeEntry(entry) {
+    return entry && entry.type === "youtube";
+  }
+
+  function buildItems(data) {
+    var items = [];
+    var videos = Array.isArray(data.videos) ? data.videos : [];
+    videos.forEach(function (item) {
+      var file = typeof item === "string" ? item : item.file;
+      if (!file) return;
+      items.push({ type: "local", raw: item, file: file });
+    });
+    getYoutubeEntries().forEach(function (config) {
+      items.push({
+        type: "youtube",
+        config: config,
+        file: typeof config.id === "string" && config.id.trim() ? config.id.trim() : "youtube",
+      });
+    });
+    return items;
+  }
+
   function getVideoDetails(file) {
     var details = window.PSST_VIDEO_DETAILS;
     if (!details || typeof details !== "object") return {};
@@ -57,7 +87,38 @@
     return match;
   }
 
-  function getVideoTitle(item, file) {
+  function getYoutubeConfig(entry) {
+    if (!isYoutubeEntry(entry)) return null;
+    return entry.config || null;
+  }
+
+  function getTrailerFile(entry) {
+    var yt = getYoutubeConfig(entry);
+    if (!yt || typeof yt.trailerFile !== "string") return "";
+    return yt.trailerFile.trim();
+  }
+
+  function getPlaybackFile(entry) {
+    if (!entry) return "";
+    if (isYoutubeEntry(entry)) return getTrailerFile(entry);
+    return entry.file || "";
+  }
+
+  function appendWatchVideoButton(content) {
+    var btnRow = document.createElement("div");
+    btnRow.className = "psst-movie-buttons";
+    var watchBtn = document.createElement("a");
+    watchBtn.href = "#";
+    watchBtn.className = "psst-btn psst-btn--primary";
+    watchBtn.dataset.action = "watch-video";
+    watchBtn.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i> Watch video';
+    btnRow.appendChild(watchBtn);
+    content.appendChild(btnRow);
+  }
+
+  function getVideoTitle(item, file, entry) {
+    var yt = getYoutubeConfig(entry);
+    if (yt && typeof yt.title === "string") return yt.title.trim();
     if (item && typeof item === "object" && typeof item.title === "string") {
       return item.title.trim();
     }
@@ -66,7 +127,9 @@
     return "";
   }
 
-  function getVideoDescription(item, file) {
+  function getVideoDescription(item, file, entry) {
+    var yt = getYoutubeConfig(entry);
+    if (yt && typeof yt.description === "string") return yt.description.trim();
     if (item && typeof item === "object" && typeof item.description === "string") {
       return item.description.trim();
     }
@@ -75,16 +138,20 @@
     return "";
   }
 
-  function getTopic(item, file) {
+  function getTopic(item, file, entry) {
+    var yt = getYoutubeConfig(entry);
+    if (yt && typeof yt.topic === "string" && yt.topic.trim()) return yt.topic.trim();
     var details = getVideoDetails(file);
     if (typeof details.topic === "string" && details.topic.trim()) return details.topic.trim();
-    var title = getVideoTitle(item, file);
+    var title = getVideoTitle(item, file, entry);
     if (title) return title;
     if (item && typeof item === "object" && typeof item.topic === "string" && item.topic.trim()) return item.topic.trim();
     return "PSST event";
   }
 
-  function getThumbUrl(item, file) {
+  function getThumbUrl(item, file, entry) {
+    var yt = getYoutubeConfig(entry);
+    if (yt && typeof yt.thumb === "string" && yt.thumb.trim()) return yt.thumb.trim();
     if (item && typeof item === "object" && typeof item.thumb === "string" && item.thumb.trim()) {
       return item.thumb.trim();
     }
@@ -108,38 +175,62 @@
   }
 
   /** Explicit thumb first (if set), then same-name images under assets/psst/images/ */
-  function getThumbCandidateUrls(item, file) {
-    var explicit = (getThumbUrl(item, file) || "").trim();
-    var stemUrls = urlsForStemThumbs(file);
-    if (explicit) {
-      var list = [explicit];
-      stemUrls.forEach(function (u) {
-        if (u !== explicit) list.push(u);
-      });
+  function getThumbCandidateUrls(item, file, entry) {
+    if (isYoutubeEntry(entry)) {
+      var list = [];
+      var explicit = (getThumbUrl(item, file, entry) || "").trim();
+      if (explicit) {
+        list.push(explicit);
+        var stem = fileStem(explicit);
+        if (stem) {
+          var encStem = encodeURIComponent(stem);
+          THUMB_EXTS.forEach(function (ext) {
+            var u = BASE + THUMB_SUBDIR + encStem + ext;
+            if (list.indexOf(u) === -1) list.push(u);
+          });
+        }
+      }
+      var idStem = entry.file;
+      if (idStem) {
+        var encId = encodeURIComponent(idStem);
+        THUMB_EXTS.forEach(function (ext) {
+          var u = BASE + THUMB_SUBDIR + encId + ext;
+          if (list.indexOf(u) === -1) list.push(u);
+        });
+      }
       return list;
+    }
+
+    var explicitLocal = (getThumbUrl(item, file, entry) || "").trim();
+    var stemUrls = urlsForStemThumbs(file);
+    if (explicitLocal) {
+      var localList = [explicitLocal];
+      stemUrls.forEach(function (u) {
+        if (u !== explicitLocal) localList.push(u);
+      });
+      return localList;
     }
     return stemUrls;
   }
 
-  function mountCarouselThumb(carouselItem, item, file, displayTitle) {
-    var candidates = getThumbCandidateUrls(item, file);
+  function mountPreviewImage(container, candidates, displayTitle) {
     var fallback = document.createElement("div");
     fallback.className = "psst-carousel-fallback";
     fallback.textContent = displayTitle;
 
     if (candidates.length === 0) {
-      carouselItem.appendChild(fallback);
+      container.appendChild(fallback);
       return;
     }
 
     var img = document.createElement("img");
-    img.alt = "";
+    img.alt = displayTitle;
     img.loading = "lazy";
     var idx = 0;
 
     function showFallback() {
-      carouselItem.innerHTML = "";
-      carouselItem.appendChild(fallback);
+      container.innerHTML = "";
+      container.appendChild(fallback);
     }
 
     function tryNext() {
@@ -158,16 +249,43 @@
       img.src = url;
     }
 
-    carouselItem.appendChild(img);
+    container.appendChild(img);
     tryNext();
   }
 
-  function escapeHtml(s) {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
+  function mountCarouselThumb(carouselItem, item, file, displayTitle, entry) {
+    mountPreviewImage(carouselItem, getThumbCandidateUrls(item, file, entry), displayTitle);
+  }
+
+  function mountYoutubeCarouselItem(carouselItem, entry, displayTitle) {
+    var config = entry.config;
+    carouselItem.classList.add("carousel-item--youtube");
+
+    var stack = document.createElement("div");
+    stack.className = "psst-carousel-youtube-stack";
+
+    var preview = document.createElement("div");
+    preview.className = "psst-carousel-preview";
+    mountPreviewImage(preview, getThumbCandidateUrls(null, entry.file, entry), displayTitle);
+
+    var watchBtn = document.createElement("a");
+    watchBtn.href = config.youtubeUrl.trim();
+    watchBtn.target = "_blank";
+    watchBtn.rel = "noopener noreferrer";
+    watchBtn.className = "psst-btn psst-btn--primary psst-carousel-youtube-btn";
+    var label =
+      typeof config.buttonLabel === "string" && config.buttonLabel.trim()
+        ? config.buttonLabel.trim()
+        : "Watch on YouTube";
+    watchBtn.innerHTML = '<i class="fa fa-youtube-play" aria-hidden="true"></i> ' + label;
+    watchBtn.setAttribute("aria-label", label + " (opens in a new tab)");
+    watchBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+    stack.appendChild(preview);
+    stack.appendChild(watchBtn);
+    carouselItem.appendChild(stack);
   }
 
   function formatDuration(seconds) {
@@ -180,27 +298,33 @@
     return s + "s";
   }
 
+  function appendDescription(descWrap, description, entry) {
+    if (description) {
+      var blocks = description.split(/\n\s*\n/);
+      blocks.forEach(function (block) {
+        var text = block.trim();
+        if (!text) return;
+        var p = document.createElement("p");
+        p.textContent = text;
+        descWrap.appendChild(p);
+      });
+      return;
+    }
+    if (isYoutubeEntry(entry)) return;
+    var pEmpty = document.createElement("p");
+    pEmpty.textContent = "Filipino Cultural Club (PSST) — community highlights.";
+    descWrap.appendChild(pEmpty);
+  }
+
   function renderMedia(data) {
-    var videos = Array.isArray(data.videos) ? data.videos : [];
-    if (videos.length === 0) {
+    var items = buildItems(data);
+    if (items.length === 0) {
       showEmptyInstructions();
       return;
     }
 
     if (emptyEl) emptyEl.hidden = true;
     videosWrap.hidden = false;
-
-    var items = [];
-    videos.forEach(function (item) {
-      var file = typeof item === "string" ? item : item.file;
-      if (!file) return;
-      items.push({ raw: item, file: file });
-    });
-
-    if (items.length === 0) {
-      showEmptyInstructions();
-      return;
-    }
 
     var banner = document.createElement("div");
     banner.className = "psst-movie-banner";
@@ -214,15 +338,17 @@
     items.forEach(function (entry, index) {
       var file = entry.file;
       var item = entry.raw;
-      var title = getVideoTitle(item, file);
+      var title = getVideoTitle(item, file, entry);
       var displayTitle = title || file.replace(/\.[^/.]+$/, "");
-      var description = getVideoDescription(item, file);
-      var topic = getTopic(item, file);
+      var description = getVideoDescription(item, file, entry);
+      var topic = getTopic(item, file, entry);
+      var youtube = isYoutubeEntry(entry);
 
       var content = document.createElement("div");
       content.className = "psst-movie-content" + (index === 0 ? " active" : "");
       content.dataset.file = file;
       content.dataset.index = String(index);
+      if (youtube) content.dataset.source = "youtube";
 
       var titleEl = document.createElement("h2");
       titleEl.className = "psst-movie-title";
@@ -244,34 +370,19 @@
 
       var descWrap = document.createElement("div");
       descWrap.className = "psst-movie-desc";
-      if (description) {
-        var blocks = description.split(/\n\s*\n/);
-        blocks.forEach(function (block) {
-          var text = block.trim();
-          if (!text) return;
-          var p = document.createElement("p");
-          p.textContent = text;
-          descWrap.appendChild(p);
-        });
-      } else {
-        var pEmpty = document.createElement("p");
-        pEmpty.textContent = "Filipino Cultural Club (PSST) — community highlights.";
-        descWrap.appendChild(pEmpty);
-      }
-
-      var btnRow = document.createElement("div");
-      btnRow.className = "psst-movie-buttons";
-      var watchBtn = document.createElement("a");
-      watchBtn.href = "#";
-      watchBtn.className = "psst-btn psst-btn--primary";
-      watchBtn.dataset.action = "watch-video";
-      watchBtn.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i> Watch video';
-      btnRow.appendChild(watchBtn);
+      appendDescription(descWrap, description, entry);
 
       content.appendChild(titleEl);
       content.appendChild(meta);
-      content.appendChild(descWrap);
-      content.appendChild(btnRow);
+
+      if (youtube) {
+        appendWatchVideoButton(content);
+        content.appendChild(descWrap);
+      } else {
+        content.appendChild(descWrap);
+        appendWatchVideoButton(content);
+      }
+
       leftCol.appendChild(content);
     });
 
@@ -286,7 +397,7 @@
     items.forEach(function (entry, index) {
       var file = entry.file;
       var item = entry.raw;
-      var title = getVideoTitle(item, file);
+      var title = getVideoTitle(item, file, entry);
       var displayTitle = title || file.replace(/\.[^/.]+$/, "");
 
       var ci = document.createElement("div");
@@ -296,7 +407,11 @@
       ci.setAttribute("tabindex", "0");
       ci.setAttribute("aria-label", "Select video: " + displayTitle);
 
-      mountCarouselThumb(ci, item, file, displayTitle);
+      if (isYoutubeEntry(entry)) {
+        mountYoutubeCarouselItem(ci, entry, displayTitle);
+      } else {
+        mountCarouselThumb(ci, item, file, displayTitle, entry);
+      }
 
       carousel.appendChild(ci);
     });
@@ -354,7 +469,8 @@
     function openModalWithCurrentVideo() {
       var entry = items[currentIndex];
       if (!entry) return;
-      var file = entry.file;
+      var file = getPlaybackFile(entry);
+      if (!file) return;
       var url = BASE + "videos/" + file;
 
       modalVideo.pause();
@@ -397,6 +513,7 @@
     });
 
     carousel.addEventListener("click", function (e) {
+      if (e.target.closest(".psst-carousel-youtube-btn")) return;
       var item = e.target.closest(".carousel-item");
       if (!item || !carousel.contains(item)) return;
       var idx = parseInt(item.dataset.index, 10);
@@ -407,6 +524,7 @@
       if (e.key !== "Enter" && e.key !== " ") return;
       var item = e.target.closest(".carousel-item");
       if (!item || !carousel.contains(item)) return;
+      if (e.target.closest(".psst-carousel-youtube-btn")) return;
       e.preventDefault();
       var idx = parseInt(item.dataset.index, 10);
       if (!isNaN(idx)) setActiveIndex(idx);
