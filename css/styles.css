@@ -250,7 +250,7 @@ body {
   background-size: cover;
   background-position: center 35%;
   z-index: 0;
-  filter: brightness(1.58) contrast(1.03) saturate(1.1);
+  filter: brightness(1.88) contrast(1.03) saturate(1.1);
 }
 
 .hero__overlay {
@@ -258,8 +258,8 @@ body {
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(180deg, rgba(8, 6, 16, 0.12) 0%, rgba(12, 10, 24, 0.24) 45%, rgba(10, 8, 22, 0.36) 100%),
-    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(100, 80, 200, 0.08), transparent 55%);
+    linear-gradient(180deg, rgba(8, 6, 16, 0.06) 0%, rgba(12, 10, 24, 0.14) 45%, rgba(10, 8, 22, 0.22) 100%),
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(100, 80, 200, 0.06), transparent 55%);
 }
 
 .hero__particles {
@@ -539,20 +539,45 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .hero__bg {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #0c0a12;
+  }
+}
+
 @media (max-width: 640px) {
   .hero__bg {
-    background-size: cover;
-    background-position: center 25%;
+    background-position: center center;
   }
 }
 
 @media (max-width: 420px) {
   .hero__bg {
-    background-position: center 20%;
+    background-position: center center;
   }
 }
 
-/* About: 3× original corner width (200px → 600px), fixed behind sections */
+/* About: full-page PSST sketch background + intro photo unchanged */
+.about-page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url("../assets/loreine-skitch-psst.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.42;
+  filter: brightness(1.15) contrast(1.05) saturate(1.08);
+  pointer-events: none;
+}
+
+body.page-about .gradient-bg {
+  opacity: 0.72;
+}
+
 .site-main--about {
   position: relative;
   z-index: 1;
@@ -608,6 +633,15 @@ body {
   max-width: none;
   margin-inline: 0;
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  .about-page-bg {
+    background-size: contain;
+    background-color: #0c0a12;
+    opacity: 0.5;
+    filter: brightness(1.2) contrast(1.04) saturate(1.06);
+  }
 }
 
 @media (max-width: 900px) {
@@ -781,6 +815,50 @@ section[id] {
   gap: 1.25rem;
 }
 
+.journey-grid--left {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.25rem;
+  max-width: min(400px, 100%);
+}
+
+.journey-layout {
+  display: block;
+}
+
+body.page-academic-journey .journey-intro {
+  max-width: min(400px, 100%);
+}
+
+.academic-journey-page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: url("../assets/loreine-graduation-day-ceremony-background.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  filter: brightness(0.42) contrast(1.06) saturate(0.92);
+  pointer-events: none;
+}
+
+.academic-journey-page-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 4, 14, 0.52);
+}
+
+body.page-academic-journey .gradient-bg {
+  opacity: 0.55;
+}
+
+.site-main--academic-journey {
+  position: relative;
+  z-index: 1;
+}
+
 .journey-card {
   padding: 1.4rem 1.3rem;
 }
@@ -794,6 +872,61 @@ section[id] {
 .journey-card p {
   margin: 0 0 1.15rem;
   color: var(--text-muted);
+}
+
+.journey-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem 1.35rem;
+}
+
+.journey-card__graduation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+  flex: 1 1 180px;
+  min-width: 0;
+}
+
+.journey-card__graduation-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text);
+  max-width: 16rem;
+}
+
+@media (max-width: 768px) {
+  .academic-journey-page-bg {
+    background-size: contain;
+    background-color: #0c0a12;
+    filter: brightness(0.48) contrast(1.04) saturate(0.9);
+  }
+
+  body.page-academic-journey .journey-grid--left,
+  body.page-academic-journey .journey-intro {
+    max-width: 100%;
+  }
+
+  .journey-card__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .journey-card__graduation {
+    flex: 1 1 auto;
+  }
+
+  .journey-card__graduation-title {
+    max-width: none;
+  }
+
+  .journey-card__actions .hero__cta {
+    align-self: flex-start;
+  }
 }
 
 .showcase-media__hint {

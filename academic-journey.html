@@ -11,8 +11,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
-<body>
+<body class="page-academic-journey">
   <div class="gradient-bg" aria-hidden="true"></div>
+  <div class="academic-journey-page-bg" aria-hidden="true"></div>
 
   <header class="site-header">
     <nav class="nav" aria-label="Primary">
@@ -34,22 +35,22 @@
     </nav>
   </header>
 
-  <main class="site-main site-main--page">
+  <main class="site-main site-main--page site-main--academic-journey">
     <section class="section">
       <div class="container">
         <header class="section__header reveal">
           <h2>Academic Journey</h2>
           <p class="section__lead">A home for my goals, milestones, and growth in learning</p>
         </header>
-        <div class="prose glass reveal">
+        <div class="prose glass reveal journey-intro">
           <p>This section gathers both where I am headed and what I have already achieved. It includes my long-term academic direction as well as milestone moments from my senior year.</p>
         </div>
       </div>
     </section>
 
     <section class="section section--timeline">
-      <div class="container">
-        <div class="journey-grid">
+      <div class="container journey-layout">
+        <div class="journey-grid journey-grid--left">
           <article class="journey-card glass reveal">
             <h3>Academic Goals</h3>
             <p>My future-focused plans for college, personal growth, and meaningful contribution.</p>
@@ -58,7 +59,20 @@
           <article class="journey-card glass reveal">
             <h3>Senior Capstone Showcase</h3>
             <p>A pre-graduation recognition of internship excellence and portfolio presentation at Troy High School.</p>
-            <a class="hero__cta" href="senior-showcase.html">Open Showcase</a>
+            <div class="journey-card__actions">
+              <a class="hero__cta" href="senior-showcase.html">Open Showcase</a>
+              <div class="journey-card__graduation">
+                <p class="journey-card__graduation-title">My graduation night ceremony Class of 2026</p>
+                <!-- Graduation YouTube: replace # with your full video URL (e.g. https://www.youtube.com/watch?v=...) -->
+                <a
+                  class="hero__cta hero__cta--warm"
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Watch graduation night ceremony on YouTube (opens in a new tab)"
+                >Watch it on youtube</a>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -80,4 +94,3 @@
   <script src="js/main.js" defer></script>
 </body>
 </html>
-
